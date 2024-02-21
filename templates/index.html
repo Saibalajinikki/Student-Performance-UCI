@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Performance Prediction</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif; /* Fun, playful font */
+            background-color: #757676; /* Bright yellow background */
+            background-image: url('https://example.com/background-image.jpg'); /* Add a fun background image */
+            background-size: cover;
+            background-position: center;
+            color: #333366; /* Dark blue color for contrast */
+            margin: 0;
+            padding: 20px;
+        }
+        h2 {
+            text-align: center;
+            color: #FF69B4; /* Hot pink color for headings */
+            margin-bottom: 20px;
+        }
+        form {
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white for form background */
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            width: 80%;
+            margin: auto;
+        }
+        label {
+            font-weight: bold;
+            display: block; /* Make each label display on a new line */
+            margin-top: 10px;
+        }
+        input[type=number], select {
+            width: calc(100% - 16px);
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input[type=submit] {
+            width: 100%;
+            background-color: #32CD32; /* Lime green background for submit button */
+            color: white;
+            padding: 10px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type=submit]:hover {
+            background-color: #228B22;
+        }
+        .form-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh; /* Use viewport height to vertically center the form */
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <form action="/predict" method="post">
+            <!-- School -->
+            <label for="school">School:</label>
+            <select id="school" name="school">
+                <option value="GP">Gabriel Pereira (GP)</option>
+                <option value="MS">Mousinho da Silveira (MS)</option>
+            </select><br>
+            
+            <!-- Sex -->
+            <label for="sex">Sex:</label>
+            <select id="sex" name="sex">
+                <option value="F">Female</option>
+                <option value="M">Male</option>
+            </select><br>
+            
+            <!-- Age -->
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" min="15" max="22"><br>
+            
+            <!-- Address -->
+            <label for="address">Address Type:</label>
+            <select id="address" name="address">
+                <option value="U">Urban</option>
+                <option value="R">Rural</option>
+            </select><br>
+
+            <!-- Family Size -->
+            <label for="famsize">Family Size:</label>
+            <select id="famsize" name="famsize">
+                <option value="LE3">Less or equal to 3</option>
+                <option value="GT3">Greater than 3</option>
+            </select><br>
+
+            <!-- Parent's Cohabitation Status -->
+            <label for="Pstatus">Parent's Cohabitation Status:</label>
+            <select id="Pstatus" name="Pstatus">
+                <option value="T">Living together</option>
+                <option value="A">Apart</option>
+            </select><br>
+
+            <!-- Mother's Education -->
+            <label for="Medu">Mother's Education:</label>
+            <select id="Medu" name="Medu">
+                <option value="0">None</option>
+                <option value="1">Primary education (4th grade)</option>
+                <option value="2">5th to 9th grade</option>
+                <option value="3">Secondary education</option>
+                <option value="4">Higher education</option>
+            </select><br>
+
+            <!-- Father's Education -->
+            <label for="Fedu">Father's Education:</label>
+            <select id="Fedu" name="Fedu">
+                <option value="0">None</option>
+                <option value="1">Primary education (4th grade)</option>
+                <option value="2">5th to 9th grade</option>
+                <option value="3">Secondary education</option>
+                <option value="4">Higher education</option>
+            </select><br>
+
+            <!-- Mother's Job -->
+            <label for="Mjob">Mother's Job:</label>
+            <select id="Mjob" name="Mjob">
+                <option value="teacher">Teacher</option>
+                <option value="health">Health care related</option>
+                <option value="services">Civil services (e.g., administrative, police)</option>
+                <option value="at_home">At home</option>
+                <option value="other">Other</option>
+            </select><br>
+
+            <!-- Father's Job -->
+            <label for="Fjob">Father's Job:</label>
+            <select id="Fjob" name="Fjob">
+                <option value="teacher">Teacher</option>
+                <option value="health">Health care related</option>
+                <option value="services">Civil services (e.g., administrative, police)</option>
+                <option value="at_home">At home</option>
+                <option value="other">Other</option>
+            </select><br>
+
+            <!-- Reason -->
+            <label for="reason">Reason to choose this school:</label>
+            <select id="reason" name="reason">
+                <option value="home">Close to home</option>
+                <option value="reputation">School reputation</option>
+                <option value="course">Course preference</option>
+                <option value="other">Other</option>
+            </select><br>
+
+            <!-- Guardian -->
+            <label for="guardian">Student's Guardian:</label>
+            <select id="guardian" name="guardian">
+                <option value="mother">Mother</option>
+                <option value="father">Father</option>
+                <option value="other">Other</option>
+            </select><br>
+
+            <!-- Travel Time -->
+            <label for="traveltime">Home to school travel time:</label>
+            <select id="traveltime" name="traveltime">
+                <option value="1">Less than 15 min</option>
+                <option value="2">15 to 30 min</option>
+                <option value="3">30 min to 1 hour</option>
+                <option value="4">More than 1 hour</option>
+            </select><br>
+
+            <!-- Study Time -->
+            <label for="studytime">Weekly study time:</label>
+            <select id="studytime" name="studytime">
+                <option value="1">Less than 2 hours</option>
+                <option value="2">2 to 5 hours</option>
+                <option value="3">5 to 10 hours</option>
+                <option value="4">More than 10 hours</option>
+            </select><br>
+
+            <!-- Additional fields would continue here following the same pattern -->
+            </select><br>
+
+            <!-- Travel Time -->
+            <label for="traveltime">Travel time to school:</label>
+            <select id="traveltime" name="traveltime">
+                <option value="1">{'<'} 15 min</option>
+                <option value="2">15 to 30 min</option>
+                <option value="3">30 min to 1 hour</option>
+                <option value="4">{'>'} 1 hour</option>
+            </select><br>
+
+            <!-- Study Time -->
+            <label for="studytime">Weekly study time:</label>
+            <select id="studytime" name="studytime">
+                <option value="1">{'<'} 2 hours</option>
+                <option value="2">2 to 5 hours</option>
+                <option value="3">5 to 10 hours</option>
+                <option value="4">{'>'} 10 hours</option>
+            </select><br>
+
+            <!-- Failures -->
+            <label for="failures">Number of past class failures:</label>
+            <select id="failures" name="failures">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3 or more</option>
+            </select><br>
+
+            <!-- School Support -->
+            <label for="schoolsup">Extra educational support:</label>
+            <select id="schoolsup" name="schoolsup">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select><br>
+
+            <!-- Family Support -->
+            <label for="famsup">Family educational support:</label>
+            <select id="famsup" name="famsup">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select><br>
+
+            <!-- Paid Classes -->
+            <label for="paid">Extra paid classes (Math or Portuguese):</label>
+            <select id="paid" name="paid">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select><br>
+
+            <!-- Activities -->
+            <label for="activities">Extra-curricular activities:</label>
+            <select id="activities" name="activities">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select><br>
+
+            <!-- Nursery -->
+            <label for="nursery">Attended nursery school:</label>
+            <select id="nursery" name="nursery">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select><br>
+
+            <!-- Higher Education Plans -->
+            <label for="higher">Plans for higher education:</label>
+            <select id="higher" name="higher">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select><br>
+
+            <!-- Internet Access at Home -->
+            <label for="internet">Internet access at home:</label>
+            <select id="internet" name="internet">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select><br>
+
+            <!-- In a Romantic Relationship -->
+            <label for="romantic">In a romantic relationship:</label>
+            <select id="romantic" name="romantic">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select><br>
+
+            <!-- Quality of Family Relationships -->
+            <label for="famrel">Quality of family relationships:</label>
+            <input type="number" id="famrel" name="famrel" min="1" max="5"><br>
+
+            <!-- Free Time After School -->
+            <label for="freetime">Free time after school:</label>
+            <input type="number" id="freetime" name="freetime" min="1" max="5"><br>
+
+            <!-- Going Out with Friends -->
+            <label for="goout">Going out with friends:</label>
+            <input type="number" id="goout" name="goout" min="1" max="5"><br>
+
+            <!-- Workday Alcohol Consumption -->
+            <label for="Dalc">Workday alcohol consumption:</label>
+            <input type="number" id="Dalc" name="Dalc" min="1" max="5"><br>
+
+            <!-- Weekend Alcohol Consumption -->
+            <label for="Walc">Weekend alcohol consumption:</li>
+            <input type="number" id="Walc" name="Walc" min="1" max="5"><br>
+
+            <!-- Current Health Status -->
+            <label for="health">Current health status:</label>
+            <input type="number" id="health" name="health" min="1" max="5"><br>
+
+            <!-- Number of School Absences -->
+            <label for="absences">Number of school absences:</label>
+            <input type="number" id="absences" name="absences" min="0" max="93"><br>
+
+            <!-- Grades -->
+            <label for="G1">First period grade (0 to 20):</label>
+            <input type="number" id="G1" name="G1" min="0" max="20"><br>
+
+            <label for="G2">Second period grade (0 to 20):</label>
+            <input type="number" id="G2" name="G2" min="0" max="20"><br>
+
+            <input type="submit" value="Submit">
+        </form>
+    </body>
+</html>
